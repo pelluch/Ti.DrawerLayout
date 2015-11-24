@@ -216,6 +216,18 @@ public class DrawerProxy extends TiViewProxy {
 
 	@Kroll.method
 	@Kroll.setProperty
+	public void setBackgroundColor(Object arg) {
+		setPropertyAndFire(Drawer.PROPERTY_BACKGROUND_COLOR, arg);
+	}
+
+	@Kroll.method
+	@Kroll.setProperty
+	public void setToolbarElevation(Object arg) {
+		setPropertyAndFire(Drawer.PROPERTY_TOOLBAR_ELEVATION, arg);
+	}
+
+	@Kroll.method
+	@Kroll.setProperty
 	public void setCenterView(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_CENTER_VIEW, arg);
 	}

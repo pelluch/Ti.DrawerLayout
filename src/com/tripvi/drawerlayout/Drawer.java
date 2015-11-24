@@ -18,7 +18,9 @@ import android.support.v4.widget.DrawerLayout.LayoutParams;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
+import android.graphics.Color;
 import android.widget.FrameLayout;
+import 	android.graphics.drawable.ColorDrawable;
 
 public class Drawer extends TiUIView {
 
@@ -33,11 +35,12 @@ public class Drawer extends TiUIView {
 	private boolean hasFilter = false;
 	private boolean hasToggle = true;
 	private boolean hideToolbar = false;
-
+	private String backgroundColor = "#222299";
 	private TiViewProxy leftView;
 	private TiViewProxy rightView;
 	private TiViewProxy centerView;
 	private Toolbar toolbar;
+	private float toolbarElevation;
 
 	// Static Properties
 	public static final String PROPERTY_LEFT_VIEW = "leftView";
@@ -49,6 +52,8 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_DRAWER_INDICATOR_IMAGE = "drawerIndicatorImage";
 	public static final String PROPERTY_DRAWER_LOCK_MODE = "drawerLockMode";
 	public static final String PROPERTY_HIDE_TOOLBAR = "hideToolbar";
+	public static final String PROPERTY_BACKGROUND_COLOR = "backgroundColor";
+	public static final String PROPERTY_TOOLBAR_ELEVATION = "toolbarElevation";
 
 	private static final String TAG = "TripviDrawer";
 
@@ -473,6 +478,19 @@ public class Drawer extends TiUIView {
 				setToolbarVisible(true);
 			}
 		}
+		if (d.containsKey(PROPERTY_BACKGROUND_COLOR)) {
+			backgroundColor = (TiConvert.toString(d.get(PROPERTY_BACKGROUND_COLOR)));
+			if(toolbar != null) {
+				int color = Color.parseColor(backgroundColor);
+				toolbar.setBackground(new ColorDrawable(color));
+			}
+		}
+		if (d.containsKey(PROPERTY_TOOLBAR_ELEVATION)) {
+			toolbarElevation = (TiConvert.toFloat(d.get(PROPERTY_TOOLBAR_ELEVATION)));
+			if(toolbar != null) {				
+				toolbar.setElevation(toolbarElevation);
+			}
+		}
 
 		super.processProperties(d);
 	}
@@ -575,6 +593,17 @@ public class Drawer extends TiUIView {
 			} else {
 				setToolbarVisible(true);
 			}
+		} else if (key.equals(PROPERTY_BACKGROUND_COLOR)) {		
+			backgroundColor = (TiConvert.toString(newValue));
+			if(toolbar != null) {
+				int color = Color.parseColor(backgroundColor);
+				toolbar.setBackground(new ColorDrawable(color));
+			}		
+		} else if (key.equals(PROPERTY_TOOLBAR_ELEVATION)) {		
+			toolbarElevation = (TiConvert.toFloat(newValue));
+			if(toolbar != null) {				
+				toolbar.setElevation(toolbarElevation);
+			}		
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
 		}
