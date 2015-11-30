@@ -204,6 +204,12 @@ public class DrawerProxy extends TiViewProxy {
 
 	@Kroll.method
 	@Kroll.setProperty
+	public void setAddPadding(Object arg) {
+		setPropertyAndFire(Drawer.PROPERTY_ADD_PADDING, arg);
+	}
+
+	@Kroll.method
+	@Kroll.setProperty
 	public void setRightDrawerWidth(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_RIGHT_VIEW_WIDTH, arg);
 	}
@@ -271,6 +277,15 @@ public class DrawerProxy extends TiViewProxy {
 	@Kroll.setProperty
 	public void setToolbarHidden(Object arg) {
 		setPropertyAndFire(Drawer.PROPERTY_HIDE_TOOLBAR, arg);
+	}
+
+	public int getStatusBarHeight() {
+	    int result = 0;
+	    int resourceId = getActivity().getResources().getIdentifier("status_bar_height", "dimen", "android");
+	    if (resourceId > 0) {
+	        result = getActivity().getResources().getDimensionPixelSize(resourceId);
+	    }
+	    return result;
 	}
 
 }

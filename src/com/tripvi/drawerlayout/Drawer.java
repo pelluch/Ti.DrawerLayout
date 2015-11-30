@@ -41,6 +41,8 @@ public class Drawer extends TiUIView {
 	private TiViewProxy centerView;
 	private Toolbar toolbar;
 	private float toolbarElevation;
+	private boolean addPadding = false;
+	private int statusBarHeight;
 
 	// Static Properties
 	public static final String PROPERTY_LEFT_VIEW = "leftView";
@@ -54,7 +56,7 @@ public class Drawer extends TiUIView {
 	public static final String PROPERTY_HIDE_TOOLBAR = "hideToolbar";
 	public static final String PROPERTY_BACKGROUND_COLOR = "backgroundColor";
 	public static final String PROPERTY_TOOLBAR_ELEVATION = "toolbarElevation";
-
+	public static final String PROPERTY_ADD_PADDING = "addPadding";
 	private static final String TAG = "TripviDrawer";
 
 	int drawable_ic_drawer = 0;
@@ -80,6 +82,7 @@ public class Drawer extends TiUIView {
 			Log.e(TAG, "XML resources could not be found!!!");
 		}
 
+		statusBarHeight = proxy.getStatusBarHeight();
 		AppCompatActivity activity = (AppCompatActivity) proxy.getActivity();
 
 		// DrawerLayout을 생성한다.
@@ -491,9 +494,19 @@ public class Drawer extends TiUIView {
 				toolbar.setElevation(toolbarElevation);
 			}
 		}
+		if (d.containsKey(PROPERTY_ADD_PADDING)) {
+			addPadding = (TiConvert.toBoolean(d.get(PROPERTY_ADD_PADDING)));
+			if(toolbar != null) {		
+				if(addPadding) {
+					toolbar.setPadding(0, statusBarHeight, 0, 0);
+				} else {
+					toolbar.setPadding(0, 0, 0, 0);
+				}
+			}
+		}
 
 		super.processProperties(d);
-	}
+	}	
 
 	@Override
 	public void propertyChanged(String key, Object oldValue, Object newValue,
@@ -603,6 +616,15 @@ public class Drawer extends TiUIView {
 			toolbarElevation = (TiConvert.toFloat(newValue));
 			if(toolbar != null) {				
 				toolbar.setElevation(toolbarElevation);
+			}		
+		} else if (key.equals(PROPERTY_ADD_PADDING)) {		
+			addPadding = (TiConvert.toBoolean(newValue));	
+			if(toolbar != null) {		
+				if(addPadding) {
+					toolbar.setPadding(0, statusBarHeight, 0, 0);
+				} else {
+					toolbar.setPadding(0, 0, 0, 0);
+				}
 			}		
 		} else {
 			super.propertyChanged(key, oldValue, newValue, proxy);
