@@ -21,6 +21,7 @@ import android.util.Log;
 import android.graphics.Color;
 import android.widget.FrameLayout;
 import 	android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 
 public class Drawer extends TiUIView {
 
@@ -490,7 +491,7 @@ public class Drawer extends TiUIView {
 		}
 		if (d.containsKey(PROPERTY_TOOLBAR_ELEVATION)) {
 			toolbarElevation = (TiConvert.toFloat(d.get(PROPERTY_TOOLBAR_ELEVATION)));
-			if(toolbar != null) {				
+			if(toolbar != null && Build.VERSION.SDK_INT >= 21) {				
 				toolbar.setElevation(toolbarElevation);
 			}
 		}
@@ -614,7 +615,7 @@ public class Drawer extends TiUIView {
 			}		
 		} else if (key.equals(PROPERTY_TOOLBAR_ELEVATION)) {		
 			toolbarElevation = (TiConvert.toFloat(newValue));
-			if(toolbar != null) {				
+			if(toolbar != null && Build.VERSION.SDK_INT >= 21) {				
 				toolbar.setElevation(toolbarElevation);
 			}		
 		} else if (key.equals(PROPERTY_ADD_PADDING)) {		
